@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import "./App.css";
-import { db } from "./firebase-config";
+import { useState, useEffect } from 'react';
+import './App.css';
+import { db } from './firebase-config';
 import {
   collection,
   getDocs,
@@ -8,27 +8,30 @@ import {
   updateDoc,
   deleteDoc,
   doc,
-} from "firebase/firestore";
+} from 'firebase/firestore';
 
 function App() {
-  const [newName, setNewName] = useState("");
-  const [newAge, setNewAge] = useState(0);
+  const [newName, setNewName] = useState('');
+  const [newTardy, setNewTardy] = useState(0);
 
   const [users, setUsers] = useState([]);
-  const usersCollectionRef = collection(db, "users");
+  const usersCollectionRef = collection(db, 'users');
 
   const createUser = async () => {
-    await addDoc(usersCollectionRef, { name: newName, age: Number(newAge) });
+    await addDoc(usersCollectionRef, {
+      name: newName,
+      tardy: Number(newTardy),
+    });
   };
 
-  const updateUser = async (id, age) => {
-    const userDoc = doc(db, "users", id);
-    const newFields = { age: age + 1 };
+  const updateUser = async (id, tardy) => {
+    const userDoc = doc(db, 'users', id);
+    const newFields = { tardy: tardy + 1 };
     await updateDoc(userDoc, newFields);
   };
 
   const deleteUser = async (id) => {
-    const userDoc = doc(db, "users", id);
+    const userDoc = doc(db, 'users', id);
     await deleteDoc(userDoc);
   };
 
@@ -43,6 +46,7 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Tardy List</h1>
       <input
         placeholder="Name..."
         onChange={(event) => {
@@ -51,9 +55,9 @@ function App() {
       />
       <input
         type="number"
-        placeholder="Age..."
+        placeholder="Number of Tardies..."
         onChange={(event) => {
-          setNewAge(event.target.value);
+          setNewTardy(event.target.value);
         }}
       />
 
@@ -61,23 +65,20 @@ function App() {
       {users.map((user) => {
         return (
           <div>
-            {" "}
-            <h1>Name: {user.name}</h1>
-            <h1>Age: {user.age}</h1>
+            <h2>Name: {user.name}</h2>
+            <h2>Tardies: {user.tardy}</h2>
             <button
               onClick={() => {
-                updateUser(user.id, user.age);
+                updateUser(user.id, user.tardy);
               }}
             >
-              {" "}
-              Increase Age
+              Add Tardy
             </button>
             <button
               onClick={() => {
                 deleteUser(user.id);
               }}
             >
-              {" "}
               Delete User
             </button>
           </div>
