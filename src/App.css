@@ -1,15 +1,11 @@
 html {
-  background-repeat: no-repeat;
-  background-color: lightblue; /* For browsers that do not support gradients */
-  background-image: linear-gradient(
-    to top,
-    rgb(174, 211, 224),
-    rgb(28, 221, 255)
-  );
+  background: linear-gradient(to top, rgb(174, 211, 224), rgb(28, 221, 255))
+    no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
-h1 {
-}
-
 .App {
   text-align: center;
   font-family: Georgia, 'Times New Roman', Times, serif;
