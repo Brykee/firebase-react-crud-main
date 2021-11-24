@@ -21,6 +21,8 @@ function App() {
     await addDoc(usersCollectionRef, {
       name: newName,
       tardy: Number(newTardy),
+    }).then(() => {
+      alert('User Created');
     });
   };
 
@@ -38,9 +40,10 @@ function App() {
   useEffect(() => {
     const getUsers = async () => {
       const data = await getDocs(usersCollectionRef);
+      console.log(usersCollectionRef);
       setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
-
+    // .where('tardy', '>=', 5);
     getUsers();
   }, []);
 
@@ -60,8 +63,9 @@ function App() {
           setNewTardy(event.target.value);
         }}
       />
-
+      <br />
       <button onClick={createUser}> Create User</button>
+      <button onClick={naughtyList}> Naughty List </button>
       {users.map((user) => {
         return (
           <div>
